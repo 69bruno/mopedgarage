@@ -1,0 +1,15 @@
+<!-- INCLUDEJS @bruno_mopedgarage/mopedgarage_search_router.js -->
+<span id="mopedgarage-search-route" data-url="{{ U_MOPEDGARAGE_SEARCH }}"></span>
+
+<fieldset>
+	<dl>
+		<dt><label for="mopedgarage_search_brand">{{ lang('MOPEDGARAGE_SEARCH_QUERY_LABEL') }}{{ lang('COLON') }}</label><br><span>{{ lang('MOPEDGARAGE_SEARCH_QUERY_HELP') }}</span></dt>
+		<dd>
+			<input type="search" class="inputbox" name="brand" id="mopedgarage_search_brand" maxlength="100" title="{{ lang('UCP_MOPEDGARAGE_BRAND') }}" placeholder="{{ lang('UCP_MOPEDGARAGE_BRAND') }}" style="width: 9em;">
+			<input type="search" class="inputbox" name="model" id="mopedgarage_search_model" maxlength="100" title="{{ lang('UCP_MOPEDGARAGE_MODEL') }}" placeholder="{{ lang('UCP_MOPEDGARAGE_MODEL') }}" style="width: 9em;">
+			<input type="search" class="inputbox" name="capacity" id="mopedgarage_search_capacity" maxlength="10" title="{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}" placeholder="{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}" style="width: 8em;">
+			<input type="search" class="inputbox" name="year" id="mopedgarage_search_year" maxlength="4" title="{{ lang('UCP_MOPEDGARAGE_YEAR') }}" placeholder="{{ lang('UCP_MOPEDGARAGE_YEAR') }}" style="width: 5em;">
+			<label for="mopedgarage_search_with_image"><input type="checkbox" id="mopedgarage_search_with_image" name="with_image" value="1"> {{ lang('MOPEDGARAGE_SEARCH_WITH_IMAGE_SHORT') }}</label>
+		</dd>
+	</dl>
+</fieldset>

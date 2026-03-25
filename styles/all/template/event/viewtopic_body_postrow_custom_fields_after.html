@@ -1,0 +1,53 @@
+<!-- INCLUDEJS @bruno_mopedgarage/mopedgarage_postslider.js -->
+
+<!-- IF postrow.S_MOPEDGARAGE_POST -->
+<div class="profile-mopedgarage">
+    <div class="mopedgarage-post-slider" data-mopedgarage-slider="1">
+        <div class="mopedgarage-post-slider__top">
+            {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+            <button type="button" class="mopedgarage-post-slider__nav mopedgarage-post-slider__nav--prev" data-mopedgarage-prev="1" aria-label="{{ lang('PREVIOUS') }}">&#8249;</button>
+            {% endif %}
+
+            <div class="mopedgarage-post-slider__viewport">
+                {% for bike in postrow.MOPEDGARAGE_POST_BIKES %}
+                <div class="mopedgarage-post-slide{% if loop.first %} is-active{% endif %}" data-mopedgarage-slide="{{ loop.index0 }}">
+                    {% if bike.IMAGE_URL %}
+                    <a href="{{ bike.IMAGE_URL }}" class="mopedgarage-post-slide__image js-mopedgarage-lightbox-trigger" data-lightbox-image="{{ bike.IMAGE_URL }}" data-lightbox-title="{{ bike.TITLE|e('html_attr') }}">
+                        {% if bike.THUMB_URL %}
+                        <img src="{{ bike.THUMB_URL }}" alt="{{ bike.TITLE }}" loading="lazy" decoding="async">
+                        {% else %}
+                        <img src="{{ bike.IMAGE_URL }}" alt="{{ bike.TITLE }}" loading="lazy" decoding="async">
+                        {% endif %}
+                    </a>
+                    {% endif %}
+
+                    <div class="mopedgarage-post-slide__body">
+                        <div class="mopedgarage-post-slide__title">{{ bike.TITLE }}</div>
+
+                        {% if bike.S_SHOW_YEAR %}
+                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_YEAR') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.YEAR }}</span></div>
+                        {% endif %}
+
+                        {% if bike.S_SHOW_CAPACITY %}
+                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.CAPACITY }}</span></div>
+                        {% endif %}
+
+                        {% if bike.S_SHOW_COLOR %}
+                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_COLOR') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.COLOR }}</span></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+            <button type="button" class="mopedgarage-post-slider__nav mopedgarage-post-slider__nav--next" data-mopedgarage-next="1" aria-label="{{ lang('NEXT') }}">&#8250;</button>
+            {% endif %}
+        </div>
+
+        {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+        <div class="mopedgarage-post-slider__status"><span data-mopedgarage-current="1">1</span> / <span>{{ postrow.MOPEDGARAGE_POST_BIKE_COUNT }}</span></div>
+        {% endif %}
+    </div>
+</div>
+<!-- ENDIF -->

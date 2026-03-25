@@ -1,0 +1,101 @@
+{% INCLUDE 'overall_header.html' %}
+
+<a id="maincontent"></a>
+<h1>{{ lang('ACP_MOPEDGARAGE_SETTINGS') }}</h1>
+<p>{{ lang('ACP_MOPEDGARAGE_SETTINGS_EXPLAIN') }}</p>
+
+<p><a href="{{ U_MOPEDGARAGE_FIELDS }}">{{ lang('ACP_MOPEDGARAGE_FIELDS_LINK') }}</a></p>
+
+{% if not S_MOPEDGARAGE_GD_AVAILABLE %}
+<div class="errorbox">
+    <p>{{ lang('ACP_MOPEDGARAGE_GD_MISSING') }}</p>
+</div>
+{% endif %}
+
+{% if not S_MOPEDGARAGE_UPLOAD_DIR_OK %}
+<div class="errorbox">
+    <p>{{ lang('ACP_MOPEDGARAGE_UPLOAD_DIR_NOT_WRITABLE') }}</p>
+</div>
+{% endif %}
+
+<div class="noticebox">
+    <p>
+        {{ lang('ACP_MOPEDGARAGE_IMAGE_SUPPORT') }}<br>
+        {{ lang('ACP_MOPEDGARAGE_IMAGE_SUPPORT_GD') }}: {% if S_MOPEDGARAGE_GD_AVAILABLE %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %} ·
+        {{ lang('ACP_MOPEDGARAGE_IMAGE_SUPPORT_EXIF') }}: {% if S_MOPEDGARAGE_EXIF_AVAILABLE %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %} ·
+        {{ lang('ACP_MOPEDGARAGE_IMAGE_SUPPORT_WEBP') }}: {% if S_MOPEDGARAGE_WEBP_AVAILABLE %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %}
+    </p>
+</div>
+
+<form id="acp_mopedgarage" method="post" action="{{ U_ACTION }}">
+    <fieldset>
+        <legend>{{ lang('ACP_MOPEDGARAGE_FIELDSET') }}</legend>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_ENABLE_YEAR') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_ENABLE_YEAR_EXPLAIN') }}</span></dt>
+            <dd>
+                <label><input type="radio" name="mopedgarage_enable_year" value="1"{% if MOPEDGARAGE_ENABLE_YEAR %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="mopedgarage_enable_year" value="0"{% if not MOPEDGARAGE_ENABLE_YEAR %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_ENABLE_CAPACITY') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_ENABLE_CAPACITY_EXPLAIN') }}</span></dt>
+            <dd>
+                <label><input type="radio" name="mopedgarage_enable_capacity" value="1"{% if MOPEDGARAGE_ENABLE_CAPACITY %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="mopedgarage_enable_capacity" value="0"{% if not MOPEDGARAGE_ENABLE_CAPACITY %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_ENABLE_COLOR') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_ENABLE_COLOR_EXPLAIN') }}</span></dt>
+            <dd>
+                <label><input type="radio" name="mopedgarage_enable_color" value="1"{% if MOPEDGARAGE_ENABLE_COLOR %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="mopedgarage_enable_color" value="0"{% if not MOPEDGARAGE_ENABLE_COLOR %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_ENABLE_IMAGES') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_ENABLE_IMAGES_EXPLAIN') }}</span></dt>
+            <dd>
+                <label><input type="radio" name="mopedgarage_enable_images" value="1"{% if MOPEDGARAGE_ENABLE_IMAGES %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="mopedgarage_enable_images" value="0"{% if not MOPEDGARAGE_ENABLE_IMAGES %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_ALLOW_MULTIPLE') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_ALLOW_MULTIPLE_EXPLAIN') }}</span></dt>
+            <dd>
+                <label><input type="radio" name="mopedgarage_allow_multiple" value="1"{% if MOPEDGARAGE_ALLOW_MULTIPLE %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="mopedgarage_allow_multiple" value="0"{% if not MOPEDGARAGE_ALLOW_MULTIPLE %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="mopedgarage_max_bikes">{{ lang('ACP_MOPEDGARAGE_MAX_BIKES') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_MAX_BIKES_EXPLAIN') }}</span></dt>
+            <dd><input type="number" min="1" max="20" id="mopedgarage_max_bikes" name="mopedgarage_max_bikes" value="{{ MOPEDGARAGE_MAX_BIKES }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="mopedgarage_image_max_filesize_kb">{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_FILESIZE') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_FILESIZE_EXPLAIN') }}</span></dt>
+            <dd><input type="number" min="128" max="20480" id="mopedgarage_image_max_filesize_kb" name="mopedgarage_image_max_filesize_kb" value="{{ MOPEDGARAGE_IMAGE_MAX_FILESIZE_KB }}"> KB</dd>
+        </dl>
+
+        <dl>
+            <dt><label for="mopedgarage_image_max_width">{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_WIDTH') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_WIDTH_EXPLAIN') }}</span></dt>
+            <dd><input type="number" min="320" max="6000" id="mopedgarage_image_max_width" name="mopedgarage_image_max_width" value="{{ MOPEDGARAGE_IMAGE_MAX_WIDTH }}"> px</dd>
+        </dl>
+
+        <dl>
+            <dt><label for="mopedgarage_image_max_height">{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_HEIGHT') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_IMAGE_MAX_HEIGHT_EXPLAIN') }}</span></dt>
+            <dd><input type="number" min="320" max="6000" id="mopedgarage_image_max_height" name="mopedgarage_image_max_height" value="{{ MOPEDGARAGE_IMAGE_MAX_HEIGHT }}"> px</dd>
+        </dl>
+    </fieldset>
+
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="submit" value="{{ lang('SUBMIT') }}">
+        {{ S_FORM_TOKEN }}
+    </fieldset>
+</form>
+
+{% INCLUDE 'overall_footer.html' %}

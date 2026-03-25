@@ -1,0 +1,36 @@
+<div class="panel bg1 mopedgarage-search-embed-panel">
+    <div class="inner">
+        <h3>{{ lang('MOPEDGARAGE_SEARCH_TITLE') }}</h3>
+        <p>{{ lang('MOPEDGARAGE_SEARCH_EXPLAIN') }}</p>
+
+        <form action="{{ U_MOPEDGARAGE_SEARCH }}" method="get" class="mopedgarage-search-form mopedgarage-search-form--embedded">
+            <div class="fields1">
+                <dl>
+                    <dt><label for="mopedgarage_search_embed_brand">{{ lang('UCP_MOPEDGARAGE_BRAND') }}</label></dt>
+                    <dd><input type="text" id="mopedgarage_search_embed_brand" name="brand" value="" class="inputbox" maxlength="100"></dd>
+                </dl>
+                <dl>
+                    <dt><label for="mopedgarage_search_embed_model">{{ lang('UCP_MOPEDGARAGE_MODEL') }}</label></dt>
+                    <dd><input type="text" id="mopedgarage_search_embed_model" name="model" value="" class="inputbox" maxlength="100"></dd>
+                </dl>
+                <dl>
+                    <dt><label for="mopedgarage_search_embed_capacity">{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}</label></dt>
+                    <dd><input type="number" id="mopedgarage_search_embed_capacity" name="capacity" value="" min="0" class="inputbox autowidth"></dd>
+                </dl>
+                <dl>
+                    <dt><label for="mopedgarage_search_embed_year">{{ lang('UCP_MOPEDGARAGE_YEAR') }}</label></dt>
+                    <dd><input type="number" id="mopedgarage_search_embed_year" name="year" value="" min="0" max="9999" class="inputbox autowidth"></dd>
+                </dl>
+                <dl>
+                    <dt>{{ lang('MOPEDGARAGE_SEARCH_WITH_IMAGE') }}</dt>
+                    <dd><label><input type="checkbox" name="with_image" value="1"> {{ lang('MOPEDGARAGE_SEARCH_WITH_IMAGE_EXPLAIN') }}</label></dd>
+                </dl>
+            </div>
+
+            <fieldset class="submit-buttons">
+                <input type="submit" name="search" value="{{ lang('SEARCH') }}" class="button1">
+                <a href="{{ U_MOPEDGARAGE_SEARCH }}" class="button2">{{ lang('RESET') }}</a>
+            </fieldset>
+        </form>
+    </div>
+</div>

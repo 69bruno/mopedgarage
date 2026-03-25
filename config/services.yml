@@ -1,0 +1,42 @@
+services:
+    bruno.mopedgarage.listener:
+        class: bruno\mopedgarage\event\listener
+        arguments:
+            - '@auth'
+            - '@template'
+            - '@language'
+            - '@config'
+            - '@request'
+            - '@controller.helper'
+        tags:
+            - { name: event.listener }
+
+    bruno.mopedgarage.manager:
+        class: bruno\mopedgarage\service\bike_manager
+        arguments:
+            - '@dbal.conn'
+            - '%core.table_prefix%'
+
+    bruno.mopedgarage.field_manager:
+        class: bruno\mopedgarage\service\field_manager
+        arguments:
+            - '@dbal.conn'
+            - '%core.table_prefix%'
+
+    bruno.mopedgarage.image_manager:
+        class: bruno\mopedgarage\service\image_manager
+        arguments:
+            - '%core.root_path%'
+
+    bruno.mopedgarage.controller.search:
+        class: bruno\mopedgarage\controller\search
+        arguments:
+            - '@dbal.conn'
+            - '@template'
+            - '@user'
+            - '@request'
+            - '@controller.helper'
+            - '@config'
+            - '@bruno.mopedgarage.manager'
+            - '@bruno.mopedgarage.image_manager'
+            - '@bruno.mopedgarage.field_manager'

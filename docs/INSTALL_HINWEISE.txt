@@ -1,0 +1,26 @@
+Update-Paket Mopedgarage 1.0.1
+==============================
+
+Enthaltene Schwerpunkte:
+- Sprachdateien zentral geladen
+- Galerie optisch modernisiert
+- Mobile Postrow-Kachel feinjustiert
+- Lightbox vereinheitlicht
+- ACP-/UCP-Texte geglättet
+- UTF8MB4-Prüfcheckliste beigelegt
+
+Wichtig:
+Die eigentliche Charset-Umstellung ist absichtlich nicht blind automatisiert,
+weil dein Projekt mehrere Zwischenstände hatte. Bitte die SQL-Checkliste in
+/docs/UTF8MB4_CHECKLIST.md gegen den Live-Bestand ausführen.
+
+Nach dem Überschreiben:
+1. Dateien hochladen
+2. phpBB-Cache leeren
+3. Erweiterung im ACP einmal deaktivieren/aktivieren oder Migration anstoßen
+4. Galerie, Profil, Beitragsansicht und ACP-Texte prüfen
+
+
+Hinweis zum Testboard:
+Diese Version ist bewusst als Update-Migration 1.0.1 ausgelegt.
+Vorhandene Testeinträge bleiben erhalten, solange die bestehende 1.0.0 im Board bereits installiert war und nicht entfernt wird.

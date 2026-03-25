@@ -1,0 +1,161 @@
+{% INCLUDE 'ucp_header.html' %}
+<!-- INCLUDEJS @bruno_mopedgarage/mopedgarage_upload.js -->
+
+<h2>{{ lang('UCP_MOPEDGARAGE_EDIT') }}</h2>
+
+<div class="panel">
+    <div class="inner">
+        <p>{{ lang('UCP_MOPEDGARAGE_EXPLAIN') }}</p>
+
+        {% if MOPEDGARAGE_ERRORS %}
+            <p class="error">{{ MOPEDGARAGE_ERRORS }}</p>
+        {% endif %}
+
+        {% if not S_UPLOAD_DIR_OK and S_ENABLE_IMAGES %}
+            <p class="error">{{ lang('UCP_MOPEDGARAGE_UPLOAD_DIR_ERROR') }}</p>
+        {% endif %}
+
+        {% if not S_GD_AVAILABLE and S_ENABLE_IMAGES %}
+            <p class="error">{{ lang('UCP_MOPEDGARAGE_UPLOAD_GD_MISSING') }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<form id="ucp_mopedgarage" method="post" action="{{ U_ACTION }}" enctype="multipart/form-data">
+    <div class="panel">
+        <div class="inner">
+            <div class="mopedgarage-ucp-grid">
+                {% for bike_rows in loops.bike_rows %}
+                <div class="mopedgarage-bike-card">
+                    <div class="mopedgarage-bike-card__header">
+                        <h3 class="mopedgarage-bike-card__title">{{ lang('UCP_MOPEDGARAGE_BIKE') }} {{ bike_rows.ROW_NUM }}</h3>
+                    </div>
+
+                    <div class="mopedgarage-bike-card__body">
+                        <input type="hidden" name="bike_id[]" value="{{ bike_rows.ID }}">
+
+                        <dl>
+                            <dt><label for="brand_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_BRAND') }}</label></dt>
+                            <dd><input type="text" id="brand_{{ loop.index0 }}" name="brand[]" value="{{ bike_rows.BRAND }}" maxlength="100" class="inputbox"></dd>
+                        </dl>
+
+                        <dl>
+                            <dt><label for="model_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_MODEL') }}</label></dt>
+                            <dd><input type="text" id="model_{{ loop.index0 }}" name="model[]" value="{{ bike_rows.MODEL }}" maxlength="100" class="inputbox"></dd>
+                        </dl>
+
+                        {% if S_ENABLE_YEAR %}
+                        <dl>
+                            <dt><label for="year_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_YEAR') }}</label></dt>
+                            <dd><input type="number" id="year_{{ loop.index0 }}" name="year[]" value="{{ bike_rows.YEAR }}" min="0" max="9999" class="inputbox autowidth"></dd>
+                        </dl>
+                        {% else %}
+                        <input type="hidden" name="year[]" value="">
+                        {% endif %}
+
+                        {% if S_ENABLE_CAPACITY %}
+                        <dl>
+                            <dt><label for="capacity_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}</label></dt>
+                            <dd><input type="number" id="capacity_{{ loop.index0 }}" name="capacity[]" value="{{ bike_rows.CAPACITY }}" min="0" class="inputbox autowidth"></dd>
+                        </dl>
+                        {% else %}
+                        <input type="hidden" name="capacity[]" value="">
+                        {% endif %}
+
+                        {% if S_ENABLE_COLOR %}
+                        <dl>
+                            <dt><label for="color_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_COLOR') }}</label></dt>
+                            <dd><input type="text" id="color_{{ loop.index0 }}" name="color[]" value="{{ bike_rows.COLOR }}" maxlength="50" class="inputbox"></dd>
+                        </dl>
+                        {% else %}
+                        <input type="hidden" name="color[]" value="">
+                        {% endif %}
+
+                        {% if S_HAS_CUSTOM_FIELDS %}
+                        {% for custom_fields in bike_rows.custom_fields %}
+                        <dl>
+                            <dt><label for="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}">{{ custom_fields.FIELD_LABEL }}{% if custom_fields.S_REQUIRED %} *{% endif %}</label></dt>
+                            <dd>
+                                {% if custom_fields.S_TYPE_TEXT %}
+                                <input type="text" id="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" name="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" value="{{ custom_fields.FIELD_VALUE }}" maxlength="255" class="inputbox">
+                                {% elseif custom_fields.S_TYPE_NUMBER %}
+                                <input type="text" id="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" name="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" value="{{ custom_fields.FIELD_VALUE }}" maxlength="255" class="inputbox autowidth">
+                                {% elseif custom_fields.S_TYPE_BOOLEAN %}
+                                <label><input type="radio" name="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" value="1"{% if custom_fields.S_BOOL_YES %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                                <label><input type="radio" name="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" value="0"{% if custom_fields.S_BOOL_NO %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+                                {% elseif custom_fields.S_TYPE_SELECT %}
+                                <select id="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" name="custom_field_{{ bike_rows.SLOT_INDEX }}_{{ custom_fields.FIELD_ID }}" class="inputbox">
+                                    <option value="">{{ lang('UCP_MOPEDGARAGE_CUSTOM_PLEASE_SELECT') }}</option>
+                                    {% for options in custom_fields.options %}
+                                    <option value="{{ options.OPTION_VALUE }}"{% if options.S_SELECTED %} selected="selected"{% endif %}>{{ options.OPTION_LABEL }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% endif %}
+                            </dd>
+                        </dl>
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if S_ENABLE_IMAGES %}
+                        <dl>
+                            <dt>
+                                <label for="bike_image_{{ loop.index0 }}">{{ lang('UCP_MOPEDGARAGE_IMAGE') }}</label><br>
+                                <span>
+                                    {{ lang('UCP_MOPEDGARAGE_IMAGE_EXPLAIN') }}<br>
+                                    {{ lang('UCP_MOPEDGARAGE_IMAGE_RULES', MOPEDGARAGE_IMAGE_MAX_SIZE, MOPEDGARAGE_IMAGE_MAX_WIDTH, MOPEDGARAGE_IMAGE_MAX_HEIGHT) }}
+                                </span>
+                            </dt>
+                            <dd>
+                                <div class="mopedgarage-upload-widget{% if bike_rows.IMAGE_URL %} has-preview has-stored-preview{% endif %}" data-upload-widget="1" data-has-stored-preview="{% if bike_rows.IMAGE_URL %}1{% else %}0{% endif %}">
+                                    <div class="mopedgarage-upload-dropzone" tabindex="0" role="button" aria-label="{{ lang('UCP_MOPEDGARAGE_IMAGE_DROPZONE') }}">
+                                        <div class="mopedgarage-upload-dropzone-inner">
+                                            <strong>{{ lang('UCP_MOPEDGARAGE_IMAGE_DROPZONE') }}</strong><br>
+                                            {{ lang('UCP_MOPEDGARAGE_IMAGE_DROPZONE_SUB') }}
+                                        </div>
+                                    </div>
+
+                                    <input class="js-mopedgarage-file-input" type="file" id="bike_image_{{ loop.index0 }}" name="bike_image_{{ loop.index0 }}" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
+
+                                    <div class="mopedgarage-upload-preview-wrap{% if not bike_rows.IMAGE_URL %} is-hidden{% endif %}">
+                                        {% if bike_rows.IMAGE_URL %}
+                                        <a href="{{ bike_rows.IMAGE_URL }}" class="js-mopedgarage-lightbox-trigger mopedgarage-upload-preview-link" data-lightbox-image="{{ bike_rows.IMAGE_URL }}" data-lightbox-title="{{ bike_rows.BRAND }} {{ bike_rows.MODEL }}">
+                                            <img src="{% if bike_rows.THUMB_URL %}{{ bike_rows.THUMB_URL }}{% else %}{{ bike_rows.IMAGE_URL }}{% endif %}" alt="{{ lang('UCP_MOPEDGARAGE_IMAGE_PREVIEW') }}" class="mopedgarage-upload-preview">
+                                        </a>
+                                        {% else %}
+                                        <img src="" alt="{{ lang('UCP_MOPEDGARAGE_IMAGE_PREVIEW') }}" class="mopedgarage-upload-preview">
+                                        {% endif %}
+                                    </div>
+
+                                    <input type="hidden" name="bike_image_{{ loop.index0 }}_delete" value="0" class="js-mopedgarage-delete-flag">
+                                    <input type="hidden" name="existing_image[]" value="{{ bike_rows.IMAGE }}">
+
+                                    <div class="mopedgarage-upload-actions">
+                                        <button type="button" class="button2 js-mopedgarage-replace">{{ lang('UCP_MOPEDGARAGE_REPLACE_IMAGE') }}</button>
+                                        <button type="button" class="button2 js-mopedgarage-remove">{{ lang('UCP_MOPEDGARAGE_DELETE_IMAGE') }}</button>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        {% else %}
+                        <input type="hidden" name="existing_image[]" value="">
+                        {% endif %}
+
+                        <dl>
+                            <dt>{{ lang('UCP_MOPEDGARAGE_DELETE_ENTRY') }}</dt>
+                            <dd><label><input type="checkbox" name="delete_entry[{{ loop.index0 }}]" value="1"> {{ lang('UCP_MOPEDGARAGE_DELETE_ENTRY_EXPLAIN') }}</label></dd>
+                        </dl>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="submit-buttons">
+        <input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1">
+        <input type="reset" name="reset" value="{{ lang('RESET') }}" class="button2">
+        {{ S_FORM_TOKEN }}
+    </fieldset>
+</form>
+
+{% INCLUDE 'ucp_footer.html' %}

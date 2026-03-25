@@ -1,0 +1,136 @@
+{% INCLUDE 'overall_header.html' %}
+
+<a id="maincontent"></a>
+<h1>{{ lang('ACP_MOPEDGARAGE_FIELDS') }}</h1>
+<p>{{ lang('ACP_MOPEDGARAGE_FIELDS_EXPLAIN') }}</p>
+
+<p><a href="{{ U_MOPEDGARAGE_SETTINGS }}">&laquo; {{ lang('ACP_MOPEDGARAGE_SETTINGS') }}</a></p>
+
+{% if FIELD_ERRORS %}
+<div class="errorbox">
+    <p>{{ FIELD_ERRORS }}</p>
+</div>
+{% endif %}
+
+<div class="panel">
+    <h3>{{ lang('ACP_MOPEDGARAGE_FIELDS_EXISTING') }}</h3>
+    {% if loops.field_rows|length %}
+    <table class="table1 zebra-table">
+        <thead>
+            <tr>
+                <th>{{ lang('ACP_MOPEDGARAGE_FIELD_NAME') }}</th>
+                <th>{{ lang('ACP_MOPEDGARAGE_FIELD_LABEL') }}</th>
+                <th>{{ lang('ACP_MOPEDGARAGE_FIELD_TYPE') }}</th>
+                <th>{{ lang('ACP_MOPEDGARAGE_FIELD_SORT') }}</th>
+                <th>{{ lang('ACP_MOPEDGARAGE_FIELD_STATUS') }}</th>
+                <th>{{ lang('ACP_MOPEDGARAGE_ACTIONS') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field_rows in loops.field_rows %}
+            <tr>
+                <td>{{ field_rows.FIELD_NAME }}</td>
+                <td>{{ field_rows.FIELD_LABEL }}</td>
+                <td>{{ field_rows.FIELD_TYPE }}</td>
+                <td>{{ field_rows.FIELD_SORT }}</td>
+                <td>
+                    {% if field_rows.S_ACTIVE %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %}
+                    {% if field_rows.S_REQUIRED %} · {{ lang('ACP_MOPEDGARAGE_FIELD_REQUIRED') }}{% endif %}
+                    {% if field_rows.S_SHOW_PROFILE %} · {{ lang('ACP_MOPEDGARAGE_FIELD_SHOW_PROFILE') }}{% endif %}
+                </td>
+                <td><a href="{{ field_rows.U_EDIT }}">{{ lang('EDIT') }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>{{ lang('ACP_MOPEDGARAGE_FIELDS_NONE') }}</p>
+    {% endif %}
+</div>
+
+<form id="acp_mopedgarage_fields" method="post" action="{{ U_ACTION }}">
+    <fieldset>
+        <legend>{% if S_EDIT_MODE %}{{ lang('ACP_MOPEDGARAGE_FIELD_EDIT') }}{% else %}{{ lang('ACP_MOPEDGARAGE_FIELD_CREATE') }}{% endif %}</legend>
+
+        <input type="hidden" name="field_id" value="{{ FIELD_ID }}">
+
+        <dl>
+            <dt><label for="field_name">{{ lang('ACP_MOPEDGARAGE_FIELD_NAME') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_FIELD_NAME_EXPLAIN') }}</span></dt>
+            <dd><input type="text" class="text medium" id="field_name" name="field_name" value="{{ FIELD_NAME }}" maxlength="50"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="field_label">{{ lang('ACP_MOPEDGARAGE_FIELD_LABEL') }}</label></dt>
+            <dd><input type="text" class="text medium" id="field_label" name="field_label" value="{{ FIELD_LABEL }}" maxlength="255"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="field_type">{{ lang('ACP_MOPEDGARAGE_FIELD_TYPE') }}</label></dt>
+            <dd>
+                <select id="field_type" name="field_type">
+                    <option value="text"{% if S_TYPE_TEXT %} selected="selected"{% endif %}>{{ lang('ACP_MOPEDGARAGE_TYPE_TEXT') }}</option>
+                    <option value="number"{% if S_TYPE_NUMBER %} selected="selected"{% endif %}>{{ lang('ACP_MOPEDGARAGE_TYPE_NUMBER') }}</option>
+                    <option value="boolean"{% if S_TYPE_BOOLEAN %} selected="selected"{% endif %}>{{ lang('ACP_MOPEDGARAGE_TYPE_BOOLEAN') }}</option>
+                    <option value="select"{% if S_TYPE_SELECT %} selected="selected"{% endif %}>{{ lang('ACP_MOPEDGARAGE_TYPE_SELECT') }}</option>
+                </select>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="field_default_value">{{ lang('ACP_MOPEDGARAGE_FIELD_DEFAULT') }}</label></dt>
+            <dd><input type="text" class="text medium" id="field_default_value" name="field_default_value" value="{{ FIELD_DEFAULT_VALUE }}" maxlength="255"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="field_sort">{{ lang('ACP_MOPEDGARAGE_FIELD_SORT') }}</label></dt>
+            <dd><input type="number" class="text short" id="field_sort" name="field_sort" value="{{ FIELD_SORT }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="field_options">{{ lang('ACP_MOPEDGARAGE_FIELD_OPTIONS') }}</label><br><span>{{ lang('ACP_MOPEDGARAGE_FIELD_OPTIONS_EXPLAIN') }}</span></dt>
+            <dd><textarea id="field_options" name="field_options" rows="8" cols="40">{{ FIELD_OPTIONS }}</textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_FIELD_REQUIRED') }}</label></dt>
+            <dd>
+                <label><input type="radio" name="field_required" value="1"{% if S_FIELD_REQUIRED %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="field_required" value="0"{% if not S_FIELD_REQUIRED %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_FIELD_ACTIVE') }}</label></dt>
+            <dd>
+                <label><input type="radio" name="field_active" value="1"{% if S_FIELD_ACTIVE %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="field_active" value="0"{% if not S_FIELD_ACTIVE %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_FIELD_SHOW_PROFILE') }}</label></dt>
+            <dd>
+                <label><input type="radio" name="field_show_profile" value="1"{% if S_FIELD_SHOW_PROFILE %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="field_show_profile" value="0"{% if not S_FIELD_SHOW_PROFILE %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label>{{ lang('ACP_MOPEDGARAGE_FIELD_SHOW_UCP') }}</label></dt>
+            <dd>
+                <label><input type="radio" name="field_show_ucp" value="1"{% if S_FIELD_SHOW_UCP %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+                <label><input type="radio" name="field_show_ucp" value="0"{% if not S_FIELD_SHOW_UCP %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
+            </dd>
+        </dl>
+    </fieldset>
+
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="save" value="{{ lang('SUBMIT') }}">
+        {% if S_EDIT_MODE %}
+        <input class="button2" type="submit" name="delete" value="{{ lang('DELETE') }}" onclick="return confirm('{{ lang('ACP_MOPEDGARAGE_FIELD_DELETE_CONFIRM')|escape('js') }}');">
+        {% endif %}
+        {{ S_FORM_TOKEN }}
+    </fieldset>
+</form>
+
+{% INCLUDE 'overall_footer.html' %}

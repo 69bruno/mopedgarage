@@ -1,0 +1,73 @@
+<div id="mopedgarage-lightbox" class="mopedgarage-lightbox" aria-hidden="true">
+    <button type="button" class="mopedgarage-lightbox__close" aria-label="{L_MOPEDGARAGE_LIGHTBOX_CLOSE}">×</button>
+    <button type="button" class="mopedgarage-lightbox__nav mopedgarage-lightbox__nav--prev" aria-label="{L_MOPEDGARAGE_PREVIOUS}">‹</button>
+    <img class="mopedgarage-lightbox__img" src="" alt="">
+    <button type="button" class="mopedgarage-lightbox__nav mopedgarage-lightbox__nav--next" aria-label="{L_MOPEDGARAGE_NEXT}">›</button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const links = Array.from(document.querySelectorAll('[data-mopedgarage-lightbox]'));
+    const lightbox = document.getElementById('mopedgarage-lightbox');
+    if (!links.length || !lightbox) {
+        return;
+    }
+
+    const img = lightbox.querySelector('.mopedgarage-lightbox__img');
+    const closeBtn = lightbox.querySelector('.mopedgarage-lightbox__close');
+    const prevBtn = lightbox.querySelector('.mopedgarage-lightbox__nav--prev');
+    const nextBtn = lightbox.querySelector('.mopedgarage-lightbox__nav--next');
+    let index = 0;
+
+    function render() {
+        const active = links[index];
+        img.src = active.getAttribute('href');
+        img.alt = active.dataset.mopedgarageTitle || '';
+    }
+
+    function openAt(i) {
+        index = i;
+        render();
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function close() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        img.src = '';
+    }
+
+    links.forEach(function (link, i) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            openAt(i);
+        });
+    });
+
+    prevBtn.addEventListener('click', function () {
+        index = (index - 1 + links.length) % links.length;
+        render();
+    });
+
+    nextBtn.addEventListener('click', function () {
+        index = (index + 1) % links.length;
+        render();
+    });
+
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) {
+            close();
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (!lightbox.classList.contains('is-open')) {
+            return;
+        }
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+    });
+});
+</script>

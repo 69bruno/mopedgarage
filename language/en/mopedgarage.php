@@ -1,0 +1,45 @@
+<?php
+if (!defined('IN_PHPBB'))
+{
+    exit;
+}
+
+$lang = array_merge($lang, [
+    'UCP_MOPEDGARAGE_TITLE' => 'My Mopedgarage',
+    'UCP_MOPEDGARAGE_EDIT' => 'Manage Mopedgarage',
+    'UCP_MOPEDGARAGE_EXPLAIN' => 'Here you can manage your motorcycles in the Mopedgarage. The administrator decides which fields are visible.',
+    'UCP_MOPEDGARAGE_BIKE' => 'Motorcycle',
+    'UCP_MOPEDGARAGE_BRAND' => 'Brand',
+    'UCP_MOPEDGARAGE_MODEL' => 'Model',
+    'UCP_MOPEDGARAGE_YEAR' => 'Year',
+    'UCP_MOPEDGARAGE_CAPACITY' => 'ccm',
+    'UCP_MOPEDGARAGE_COLOR' => 'Colour',
+    'UCP_MOPEDGARAGE_IMAGE' => 'Photo',
+    'UCP_MOPEDGARAGE_IMAGE_EXPLAIN' => 'Allowed formats: JPG, JPEG, PNG, WebP or GIF.',
+    'UCP_MOPEDGARAGE_IMAGE_RULES' => 'Maximum %1$d KB and %2$d × %3$d pixels.',
+    'UCP_MOPEDGARAGE_IMAGE_DROPZONE' => 'Drop image here',
+    'UCP_MOPEDGARAGE_IMAGE_DROPZONE_SUB' => 'or click to choose one',
+    'UCP_MOPEDGARAGE_IMAGE_PREVIEW' => 'Image preview',
+    'UCP_MOPEDGARAGE_REPLACE_IMAGE' => 'Replace image',
+    'UCP_MOPEDGARAGE_DELETE_IMAGE' => 'Delete image',
+    'UCP_MOPEDGARAGE_REMOVE_IMAGE' => 'Remove existing photo',
+    'UCP_MOPEDGARAGE_DELETE_ENTRY' => 'Delete entry',
+    'UCP_MOPEDGARAGE_DELETE_ENTRY_EXPLAIN' => 'Remove this entry completely when saving.',
+    'UCP_MOPEDGARAGE_UPLOAD_ERROR' => 'The photo could not be uploaded.',
+    'UCP_MOPEDGARAGE_UPLOAD_INVALID' => 'The image format is not allowed.',
+    'UCP_MOPEDGARAGE_UPLOAD_INVALID_FOR_FILE' => 'The file “%1$s” is not an allowed image format.',
+    'UCP_MOPEDGARAGE_UPLOAD_TOO_LARGE' => 'The file “%1$s” is larger than %2$d KB.',
+    'UCP_MOPEDGARAGE_UPLOAD_TOO_LARGE_AFTER_PROCESSING' => 'The file “%1$s” could not be saved below %2$d KB even after resizing.',
+    'UCP_MOPEDGARAGE_UPLOAD_NOT_IMAGE' => 'The file “%1$s” is not a valid image.',
+    'UCP_MOPEDGARAGE_UPLOAD_TOO_LARGE_DIMENSIONS' => 'The file “%1$s” exceeds %2$d × %3$d pixels.',
+    'UCP_MOPEDGARAGE_UPLOAD_FAILED_FOR_FILE' => 'The file “%1$s” could not be saved.',
+    'UCP_MOPEDGARAGE_UPLOAD_DIR_ERROR' => 'The upload directory is not writable.',
+    'UCP_MOPEDGARAGE_UPLOAD_GD_MISSING' => 'Image uploads are currently unavailable because the GD library is missing on the server.',
+    'UCP_MOPEDGARAGE_UPLOAD_WEBP_UNAVAILABLE_FOR_FILE' => 'The file “%1$s” uses the WebP format, which is not supported on this server right now.',
+    'UCP_MOPEDGARAGE_PROFILE_HEADING' => 'Mopedgarage',
+    'UCP_MOPEDGARAGE_SAVED' => 'Your Mopedgarage data has been saved.',
+    'MOPEDGARAGE_SEARCH_TITLE' => 'Mopedgarage Search',
+    'MOPEDGARAGE_SEARCH_QUERY_LABEL' => 'Mopedgarage Search',
+    'MOPEDGARAGE_SEARCH_QUERY_HELP' => 'Search by make, model, year or ccm. Wildcards like % are not needed.',
+    'MOPEDGARAGE_SEARCH_WITH_IMAGE_SHORT' => 'with image only',
+]);

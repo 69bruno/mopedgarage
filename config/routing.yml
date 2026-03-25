@@ -1,0 +1,7 @@
+mopedgarage_gallery:
+    path: /mopedgarage
+    defaults: { _controller: bruno.mopedgarage.controller.search:handle }
+
+mopedgarage_search:
+    path: /mopedgarage-suche
+    defaults: { _controller: bruno.mopedgarage.controller.search:handle }
