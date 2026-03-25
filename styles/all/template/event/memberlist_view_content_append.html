@@ -1,33 +1,39 @@
 {% if S_MOPEDGARAGE_PROFILE %}
-<div class="panel bg1 mopedgarage-profile-panel">
+<div class="panel bg1">
     <div class="inner">
         <h3>{{ lang('UCP_MOPEDGARAGE_PROFILE_HEADING') }}</h3>
-        <div class="mopedgarage-cards">
-            {% for mopedgarage_bikes in loops.mopedgarage_bikes %}
-            <div class="mopedgarage-card">
-                {% if mopedgarage_bikes.S_HAS_IMAGE %}
-                <div class="mopedgarage-card__image">
-                    <a href="{{ mopedgarage_bikes.IMAGE_URL }}" class="js-mopedgarage-lightbox-trigger" data-lightbox-image="{{ mopedgarage_bikes.IMAGE_URL }}" data-lightbox-title="{{ mopedgarage_bikes.TITLE|e('html_attr') }}" aria-label="{{ mopedgarage_bikes.TITLE }}">
-                        {% if mopedgarage_bikes.THUMB_URL %}
-                        <img src="{{ mopedgarage_bikes.THUMB_URL }}" alt="{{ mopedgarage_bikes.TITLE }}" loading="lazy" decoding="async">
-                        {% else %}
-                        <img src="{{ mopedgarage_bikes.IMAGE_URL }}" alt="{{ mopedgarage_bikes.TITLE }}" loading="lazy" decoding="async">
-                        {% endif %}
-                    </a>
-                </div>
+
+        {% for bike in loops.mopedgarage_bikes %}
+            <div class="mopedgarage-profile-bike" style="margin-bottom: 18px;">
+                {% if bike.S_HAS_IMAGE and bike.THUMB_URL %}
+                    <div style="margin-bottom: 8px;">
+                        <img src="{{ bike.THUMB_URL }}" alt="{{ bike.TITLE|e }}" style="max-width: 260px; height: auto;" />
+                    </div>
                 {% endif %}
-                <div class="mopedgarage-card__body">
-                    <h4>{{ mopedgarage_bikes.TITLE }}</h4>
-                    {% if mopedgarage_bikes.BRAND %}<p><strong>{{ lang('UCP_MOPEDGARAGE_BRAND') }}:</strong> {{ mopedgarage_bikes.BRAND }}</p>{% endif %}
-                    {% if mopedgarage_bikes.MODEL %}<p><strong>{{ lang('UCP_MOPEDGARAGE_MODEL') }}:</strong> {{ mopedgarage_bikes.MODEL }}</p>{% endif %}
-                    {% if mopedgarage_bikes.S_SHOW_YEAR %}<p><strong>{{ lang('UCP_MOPEDGARAGE_YEAR') }}:</strong> {{ mopedgarage_bikes.YEAR }}</p>{% endif %}
-                    {% if mopedgarage_bikes.S_SHOW_CAPACITY %}<p><strong>{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}:</strong> {{ mopedgarage_bikes.CAPACITY }}</p>{% endif %}
-                    {% if mopedgarage_bikes.S_SHOW_COLOR %}<p><strong>{{ lang('UCP_MOPEDGARAGE_COLOR') }}:</strong> {{ mopedgarage_bikes.COLOR }}</p>{% endif %}
-                    {% for custom_fields in mopedgarage_bikes.custom_fields %}<p><strong>{{ custom_fields.FIELD_LABEL }}:</strong> {{ custom_fields.FIELD_VALUE }}</p>{% endfor %}
-                </div>
+
+                <strong>{{ bike.TITLE }}</strong><br>
+
+                {% if bike.BRAND %}
+                    {{ lang('UCP_MOPEDGARAGE_BRAND') }}{{ lang('COLON') }} {{ bike.BRAND }}<br>
+                {% endif %}
+                {% if bike.MODEL %}
+                    {{ lang('UCP_MOPEDGARAGE_MODEL') }}{{ lang('COLON') }} {{ bike.MODEL }}<br>
+                {% endif %}
+                {% if bike.S_SHOW_YEAR %}
+                    {{ lang('UCP_MOPEDGARAGE_YEAR') }}{{ lang('COLON') }} {{ bike.YEAR }}<br>
+                {% endif %}
+                {% if bike.S_SHOW_CAPACITY %}
+                    {{ lang('UCP_MOPEDGARAGE_CAPACITY') }}{{ lang('COLON') }} {{ bike.CAPACITY }}<br>
+                {% endif %}
+                {% if bike.S_SHOW_COLOR %}
+                    {{ lang('UCP_MOPEDGARAGE_COLOR') }}{{ lang('COLON') }} {{ bike.COLOR }}<br>
+                {% endif %}
+
+                {% for custom in bike.custom_fields %}
+                    {{ custom.FIELD_LABEL }}{{ lang('COLON') }} {{ custom.FIELD_VALUE }}<br>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endif %}

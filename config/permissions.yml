@@ -1,0 +1,16 @@
+categories:
+    mopedgarage:
+        name: ACL_CAT_MOPEDGARAGE
+
+permissions:
+    u_mopedgarage_view:
+        lang: ACL_U_MOPEDGARAGE_VIEW
+        cat: mopedgarage
+
+    u_mopedgarage_use:
+        lang: ACL_U_MOPEDGARAGE_USE
+        cat: mopedgarage
+
+    a_mopedgarage_manage:
+        lang: ACL_A_MOPEDGARAGE_MANAGE
+        cat: mopedgarage

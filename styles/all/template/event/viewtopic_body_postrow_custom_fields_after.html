@@ -1,53 +1,230 @@
-<!-- INCLUDEJS @bruno_mopedgarage/mopedgarage_postslider.js -->
+{% if postrow.S_MOPEDGARAGE_POST and postrow.MOPEDGARAGE_POST_BIKES %}
+<dd class="profile-custom-field mopedgarage-postrow-field">
+    <strong>{{ lang('MOPEDGARAGE') }}{{ lang('COLON') }}</strong>
 
-<!-- IF postrow.S_MOPEDGARAGE_POST -->
-<div class="profile-mopedgarage">
-    <div class="mopedgarage-post-slider" data-mopedgarage-slider="1">
-        <div class="mopedgarage-post-slider__top">
-            {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
-            <button type="button" class="mopedgarage-post-slider__nav mopedgarage-post-slider__nav--prev" data-mopedgarage-prev="1" aria-label="{{ lang('PREVIOUS') }}">&#8249;</button>
-            {% endif %}
+    <div class="mopedgarage-post-slider">
+        {% for bike in postrow.MOPEDGARAGE_POST_BIKES %}
+            <div class="mopedgarage-post-slide" data-index="{{ loop.index0 }}"{% if not loop.first %} style="display:none;"{% endif %}>
+                <div class="mopedgarage-post-inner">
 
-            <div class="mopedgarage-post-slider__viewport">
-                {% for bike in postrow.MOPEDGARAGE_POST_BIKES %}
-                <div class="mopedgarage-post-slide{% if loop.first %} is-active{% endif %}" data-mopedgarage-slide="{{ loop.index0 }}">
-                    {% if bike.IMAGE_URL %}
-                    <a href="{{ bike.IMAGE_URL }}" class="mopedgarage-post-slide__image js-mopedgarage-lightbox-trigger" data-lightbox-image="{{ bike.IMAGE_URL }}" data-lightbox-title="{{ bike.TITLE|e('html_attr') }}">
-                        {% if bike.THUMB_URL %}
-                        <img src="{{ bike.THUMB_URL }}" alt="{{ bike.TITLE }}" loading="lazy" decoding="async">
-                        {% else %}
-                        <img src="{{ bike.IMAGE_URL }}" alt="{{ bike.TITLE }}" loading="lazy" decoding="async">
+                    <div class="mopedgarage-post-imagewrap">
+                        {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+                            <a href="#"
+                               class="mopedgarage-post-prev"
+                               aria-label="Zurück"
+                               title="Vorheriges Motorrad">&#10094;</a>
                         {% endif %}
-                    </a>
-                    {% endif %}
 
-                    <div class="mopedgarage-post-slide__body">
-                        <div class="mopedgarage-post-slide__title">{{ bike.TITLE }}</div>
+                        <div class="mopedgarage-post-imagebox">
+                            {% if bike.S_HAS_IMAGE and bike.THUMB_URL %}
+                                {% if bike.IMAGE_URL %}
+                                    <a href="{{ bike.IMAGE_URL }}"
+                                       class="js-mopedgarage-lightbox-trigger"
+                                       data-lightbox-image="{{ bike.IMAGE_URL }}"
+                                       data-lightbox-title="{{ bike.TITLE|e('html_attr') }}"
+                                       data-lightbox-group="post-{{ postrow.POST_ID }}"
+                                       title="{{ bike.TITLE }}">
+                                        <img src="{{ bike.THUMB_URL }}"
+                                             alt="{{ bike.TITLE|e }}"
+                                             class="mopedgarage-post-image" />
+                                    </a>
+                                {% else %}
+                                    <img src="{{ bike.THUMB_URL }}"
+                                         alt="{{ bike.TITLE|e }}"
+                                         class="mopedgarage-post-image" />
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+                            <a href="#"
+                               class="mopedgarage-post-next"
+                               aria-label="Weiter"
+                               title="Nächstes Motorrad">&#10095;</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mopedgarage-post-meta">
+                        <div class="mopedgarage-post-title">{{ bike.TITLE }}</div>
 
                         {% if bike.S_SHOW_YEAR %}
-                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_YEAR') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.YEAR }}</span></div>
+                            <div>{{ lang('UCP_MOPEDGARAGE_YEAR') }}{{ lang('COLON') }} {{ bike.YEAR }}</div>
                         {% endif %}
-
                         {% if bike.S_SHOW_CAPACITY %}
-                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.CAPACITY }}</span></div>
+                            <div>ccm{{ lang('COLON') }} {{ bike.CAPACITY }}</div>
+                        {% endif %}
+                        {% if bike.S_SHOW_COLOR %}
+                            <div>{{ lang('UCP_MOPEDGARAGE_COLOR') }}{{ lang('COLON') }} {{ bike.COLOR }}</div>
                         {% endif %}
 
-                        {% if bike.S_SHOW_COLOR %}
-                        <div class="mopedgarage-post-slide__line"><span class="mopedgarage-post-slide__label">{{ lang('UCP_MOPEDGARAGE_COLOR') }}:</span> <span class="mopedgarage-post-slide__value">{{ bike.COLOR }}</span></div>
+                        {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+                            <div class="mopedgarage-post-counter">1/{{ postrow.MOPEDGARAGE_POST_BIKE_COUNT }}</div>
                         {% endif %}
                     </div>
                 </div>
-                {% endfor %}
             </div>
-
-            {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
-            <button type="button" class="mopedgarage-post-slider__nav mopedgarage-post-slider__nav--next" data-mopedgarage-next="1" aria-label="{{ lang('NEXT') }}">&#8250;</button>
-            {% endif %}
-        </div>
-
-        {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
-        <div class="mopedgarage-post-slider__status"><span data-mopedgarage-current="1">1</span> / <span>{{ postrow.MOPEDGARAGE_POST_BIKE_COUNT }}</span></div>
-        {% endif %}
+        {% endfor %}
     </div>
-</div>
-<!-- ENDIF -->
+
+    <style>
+    .mopedgarage-postrow-field .mopedgarage-post-slider {
+        margin-top: 6px;
+        width: 100%;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-inner {
+        width: 100%;
+        text-align: center;
+        background: transparent;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-imagewrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-imagebox {
+        width: 50%;
+        max-width: 140px;
+        min-width: 90px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-image {
+        max-width: 100%;
+        max-height: 95px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-prev,
+    .mopedgarage-postrow-field .mopedgarage-post-next {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        text-decoration: none;
+        border: 1px solid #c8c8c8;
+        border-radius: 50%;
+        background: transparent;
+        font-size: 15px;
+        line-height: 1;
+        flex: 0 0 24px;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-meta {
+        text-align: center;
+        line-height: 1.35;
+        font-size: .9em;
+        background: transparent;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-title {
+        font-weight: bold;
+        margin-bottom: 4px;
+        word-break: break-word;
+    }
+
+    .mopedgarage-postrow-field .mopedgarage-post-counter {
+        margin-top: 5px;
+        color: #666;
+        font-size: .9em;
+    }
+
+    @media (max-width: 700px) {
+        .mopedgarage-postrow-field {
+            display: block !important;
+        }
+
+        .mopedgarage-postrow-field .mopedgarage-post-slider,
+        .mopedgarage-postrow-field .mopedgarage-post-inner,
+        .mopedgarage-postrow-field .mopedgarage-post-meta {
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .mopedgarage-postrow-field .mopedgarage-post-imagebox {
+            width: 50%;
+            max-width: 120px;
+        }
+
+        .mopedgarage-postrow-field .mopedgarage-post-image {
+            max-height: 85px;
+        }
+    }
+    </style>
+
+    {% if postrow.MOPEDGARAGE_POST_BIKE_COUNT > 1 %}
+    <script>
+    (function() {
+        var currentScript = document.currentScript;
+        if (!currentScript) {
+            return;
+        }
+
+        var dd = currentScript.parentNode;
+        if (!dd) {
+            return;
+        }
+
+        var slider = dd.querySelector('.mopedgarage-post-slider');
+        if (!slider) {
+            return;
+        }
+
+        var slides = slider.querySelectorAll('.mopedgarage-post-slide');
+        if (!slides.length) {
+            return;
+        }
+
+        var index = 0;
+        var total = slides.length;
+
+        function render() {
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = (i === index) ? '' : 'none';
+            }
+
+            var visible = slides[index];
+            if (!visible) {
+                return;
+            }
+
+            var counter = visible.querySelector('.mopedgarage-post-counter');
+            if (counter) {
+                counter.textContent = (index + 1) + '/' + total;
+            }
+        }
+
+        slider.addEventListener('click', function(e) {
+            var prev = e.target.closest('.mopedgarage-post-prev');
+            var next = e.target.closest('.mopedgarage-post-next');
+
+            if (prev) {
+                e.preventDefault();
+                index = (index - 1 + total) % total;
+                render();
+                return;
+            }
+
+            if (next) {
+                e.preventDefault();
+                index = (index + 1) % total;
+                render();
+            }
+        });
+
+        render();
+    })();
+    </script>
+    {% endif %}
+</dd>
+{% endif %}

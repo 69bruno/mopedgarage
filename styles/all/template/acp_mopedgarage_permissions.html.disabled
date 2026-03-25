@@ -1,0 +1,47 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_MOPEDGARAGE_PERMISSIONS}</h1>
+<p>{L_ACP_MOPEDGARAGE_PERMISSIONS_EXPLAIN}</p>
+
+<div class="panel">
+    <div class="inner">
+        <h2>{L_ACP_MOPEDGARAGE_PERMISSIONS}</h2>
+
+        <fieldset>
+            <dl>
+                <dt><label>{L_MOPEDGARAGE_PERM_USER}</label><br><span>{L_MOPEDGARAGE_PERM_USER_EXPLAIN}</span></dt>
+                <dd><a class="button1" href="{U_USER_PERMISSIONS}">{L_MOPEDGARAGE_OPEN_USER_PERMISSIONS}</a></dd>
+            </dl>
+            <dl>
+                <dt><label>{L_MOPEDGARAGE_PERM_GROUP}</label><br><span>{L_MOPEDGARAGE_PERM_GROUP_EXPLAIN}</span></dt>
+                <dd><a class="button1" href="{U_GROUP_PERMISSIONS}">{L_MOPEDGARAGE_OPEN_GROUP_PERMISSIONS}</a></dd>
+            </dl>
+            <dl>
+                <dt><label>{L_MOPEDGARAGE_PERM_ADMIN}</label><br><span>{L_MOPEDGARAGE_PERM_ADMIN_EXPLAIN}</span></dt>
+                <dd><a class="button1" href="{U_ADMIN_PERMISSIONS}">{L_MOPEDGARAGE_OPEN_ADMIN_PERMISSIONS}</a></dd>
+            </dl>
+            <dl>
+                <dt><label>{L_MOPEDGARAGE_PERM_ROLES}</label><br><span>{L_MOPEDGARAGE_PERM_ROLES_EXPLAIN}</span></dt>
+                <dd>
+                    <a class="button1" href="{U_PERMISSION_ROLES_USER}">{L_MOPEDGARAGE_OPEN_USER_ROLES}</a>
+                    <a class="button1" href="{U_PERMISSION_ROLES_ADMIN}">{L_MOPEDGARAGE_OPEN_ADMIN_ROLES}</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt><label>{L_MOPEDGARAGE_PERM_MASKS}</label><br><span>{L_MOPEDGARAGE_PERM_MASKS_EXPLAIN}</span></dt>
+                <dd><a class="button1" href="{U_PERMISSION_MASKS}">{L_MOPEDGARAGE_OPEN_PERMISSION_MASKS}</a></dd>
+            </dl>
+        </fieldset>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="inner">
+        <h2>{L_MOPEDGARAGE_RELEVANT_RIGHTS}</h2>
+        <p><strong>u_mopedgarage_view</strong> – {L_ACL_U_MOPEDGARAGE_VIEW}</p>
+        <p><strong>u_mopedgarage_use</strong> – {L_ACL_U_MOPEDGARAGE_USE}</p>
+        <p><strong>a_mopedgarage_manage</strong> – {L_ACL_A_MOPEDGARAGE_MANAGE}</p>
+    </div>
+</div>
+
+<!-- INCLUDE overall_footer.html -->

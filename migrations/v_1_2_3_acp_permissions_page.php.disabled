@@ -1,0 +1,74 @@
+<?php
+namespace bruno\mopedgarage\migrations;
+
+class v_1_2_3_acp_permissions_page extends \phpbb\db\migration\migration
+{
+    protected function mg_module_exists($module_class, $module_langname, $parent_langname = null)
+    {
+        $sql = 'SELECT m.module_id
+            FROM ' . MODULES_TABLE . ' m';
+
+        if ($parent_langname !== null)
+        {
+            $sql .= ' LEFT JOIN ' . MODULES_TABLE . " p
+                ON p.module_id = m.parent_id";
+        }
+
+        $sql .= " WHERE m.module_class = '" . $this->db->sql_escape($module_class) . "'
+            AND m.module_langname = '" . $this->db->sql_escape($module_langname) . "'";
+
+        if ($parent_langname !== null)
+        {
+            $sql .= " AND p.module_langname = '" . $this->db->sql_escape($parent_langname) . "'";
+        }
+
+        $result = $this->db->sql_query_limit($sql, 1);
+        $row = $this->db->sql_fetchrow($result);
+        $this->db->sql_freeresult($result);
+
+        return (bool) $row;
+    }
+
+    public function effectively_installed()
+    {
+        return $this->mg_module_exists('acp', 'ACP_MOPEDGARAGE_PERMISSIONS', 'ACP_CAT_PERMISSIONS');
+    }
+
+    static public function depends_on()
+    {
+        return [
+            '\bruno\mopedgarage\migrations\v_1_2_2_modules_safe',
+        ];
+    }
+
+    public function update_data()
+    {
+        return [
+            ['module.add', [
+                'acp',
+                'ACP_CAT_PERMISSIONS',
+                [
+                    'module_basename' => '\bruno\mopedgarage\acp\permissions_module',
+                    'module_langname' => 'ACP_MOPEDGARAGE_PERMISSIONS',
+                    'module_mode'     => 'main',
+                    'module_auth'     => 'acl_a_mopedgarage_manage',
+                ]
+            ]],
+        ];
+    }
+
+    public function revert_data()
+    {
+        return [
+            ['module.remove', [
+                'acp',
+                'ACP_CAT_PERMISSIONS',
+                [
+                    'module_basename' => '\bruno\mopedgarage\acp\permissions_module',
+                    'module_langname' => 'ACP_MOPEDGARAGE_PERMISSIONS',
+                    'module_mode'     => 'main',
+                ]
+            ]],
+        ];
+    }
+}

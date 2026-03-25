@@ -2,17 +2,7 @@
 namespace bruno\mopedgarage\migrations;
 
 /**
- * Single initial migration for the first public release.
- *
- * This migration intentionally contains the complete baseline that was
- * previously spread across several intermediate development migrations:
- *
- * - core bike table
- * - custom field tables
- * - ACP/UCP module registration
- * - dedicated permissions
- * - default permission assignments
- * - initial configuration defaults
+ * Frozen initial migration for the first public release.
  */
 class v100 extends \phpbb\db\migration\migration
 {
@@ -61,9 +51,9 @@ class v100 extends \phpbb\db\migration\migration
                         'field_label' => ['VCHAR:255', ''],
                         'field_type' => ['VCHAR:20', 'text'],
                         'field_required' => ['BOOL', 0],
-                        'field_options' => ['TEXT_UNI', ''],
+                        'field_options' => ['MTEXT_UNI', ''],
                         'field_default_value' => ['VCHAR:255', ''],
-                        'field_sort' => ['INT:11', 0],
+                        'field_sort' => ['UINT', 0],
                         'field_active' => ['BOOL', 1],
                         'field_show_profile' => ['BOOL', 1],
                         'field_show_ucp' => ['BOOL', 1],
@@ -74,20 +64,16 @@ class v100 extends \phpbb\db\migration\migration
                     'KEYS' => [
                         'field_name' => ['UNIQUE', 'field_name'],
                         'field_sort' => ['INDEX', 'field_sort'],
-                        'field_active' => ['INDEX', 'field_active'],
                     ],
                 ],
                 $this->table_prefix . 'mopedgarage_field_values' => [
                     'COLUMNS' => [
-                        'value_id' => ['UINT', null, 'auto_increment'],
                         'bike_id' => ['UINT', 0],
                         'field_id' => ['UINT', 0],
-                        'field_value' => ['TEXT_UNI', ''],
+                        'field_value' => ['VCHAR:255', ''],
                     ],
-                    'PRIMARY_KEY' => 'value_id',
+                    'PRIMARY_KEY' => ['bike_id', 'field_id'],
                     'KEYS' => [
-                        'bike_field' => ['UNIQUE', ['bike_id', 'field_id']],
-                        'bike_id' => ['INDEX', 'bike_id'],
                         'field_id' => ['INDEX', 'field_id'],
                     ],
                 ],
@@ -109,16 +95,6 @@ class v100 extends \phpbb\db\migration\migration
     public function update_data()
     {
         return [
-            // Dedicated permissions
-            ['permission.add', ['u_mopedgarage_view']],
-            ['permission.add', ['u_mopedgarage_use']],
-            ['permission.add', ['a_mopedgarage_manage']],
-
-            // Sensible defaults for fresh installs
-            ['permission.permission_set', ['REGISTERED', ['u_mopedgarage_view', 'u_mopedgarage_use'], 'group']],
-            ['permission.permission_set', ['ADMINISTRATORS', 'a_mopedgarage_manage', 'group']],
-
-            // Config baseline
             ['config.add', ['mopedgarage_enable_year', 1]],
             ['config.add', ['mopedgarage_enable_capacity', 1]],
             ['config.add', ['mopedgarage_enable_color', 1]],
@@ -132,40 +108,43 @@ class v100 extends \phpbb\db\migration\migration
             ['config.add', ['mopedgarage_lightbox_global', 1]],
             ['config.add', ['mopedgarage_mobile_card_scale', 'compact']],
 
-            // ACP category and modules
+            ['permission.add', ['u_mopedgarage_view']],
+            ['permission.add', ['u_mopedgarage_use']],
+            ['permission.add', ['a_mopedgarage_manage']],
+
+            ['permission.permission_set', ['REGISTERED', ['u_mopedgarage_view', 'u_mopedgarage_use'], 'group']],
+            ['permission.permission_set', ['ADMINISTRATORS', ['u_mopedgarage_view', 'u_mopedgarage_use', 'a_mopedgarage_manage'], 'group']],
+
             ['module.add', ['acp', 'ACP_CAT_DOT_MODS', [
                 'module_langname' => 'ACP_MOPEDGARAGE',
-                'module_enabled'  => 1,
-                'module_display'  => 1,
+                'module_enabled' => 1,
+                'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
                 'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_SETTINGS',
-                'module_mode'     => 'settings',
-                'module_auth'     => 'acl_a_mopedgarage_manage',
-                'module_enabled'  => 1,
-                'module_display'  => 1,
+                'module_mode' => 'settings',
+                'module_auth' => 'acl_a_mopedgarage_manage',
+                'module_enabled' => 1,
+                'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
                 'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_FIELDS',
-                'module_mode'     => 'fields',
-                'module_auth'     => 'acl_a_mopedgarage_manage',
-                'module_enabled'  => 1,
-                'module_display'  => 1,
+                'module_mode' => 'fields',
+                'module_auth' => 'acl_a_mopedgarage_manage',
+                'module_enabled' => 1,
+                'module_display' => 1,
             ]]],
-
-            // UCP integration
             ['module.add', ['ucp', 'UCP_PROFILE', [
                 'module_basename' => '\\bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module',
                 'module_langname' => 'UCP_MOPEDGARAGE_EDIT',
-                'module_mode'     => 'edit',
-                'module_auth'     => 'acl_u_mopedgarage_use',
-                'module_enabled'  => 1,
-                'module_display'  => 1,
+                'module_mode' => 'edit',
+                'module_auth' => 'acl_u_mopedgarage_use',
+                'module_enabled' => 1,
+                'module_display' => 1,
             ]]],
 
-            // Version marker last
             ['config.add', ['mopedgarage_version', '1.0.0']],
         ];
     }

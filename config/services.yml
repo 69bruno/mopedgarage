@@ -8,6 +8,9 @@ services:
             - '@config'
             - '@request'
             - '@controller.helper'
+            - '@bruno.mopedgarage.manager'
+            - '@bruno.mopedgarage.field_manager'
+            - '@bruno.mopedgarage.image_manager'
         tags:
             - { name: event.listener }
 
