@@ -41,12 +41,12 @@ class v_1_2_0_permissions extends \phpbb\db\migration\migration
     {
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_u_mopedgarage_use'
-            WHERE module_basename = '" . $this->db->sql_escape('\\bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module') . "'";
+            WHERE module_basename = '" . $this->db->sql_escape('\bruno\mopedgarage\ucp\ucp_mopedgarage_module') . "'";
         $this->sql_query($sql);
 
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_a_mopedgarage_manage'
-            WHERE module_basename = '" . $this->db->sql_escape('\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module') . "'";
+            WHERE module_basename = '" . $this->db->sql_escape('\bruno\mopedgarage\acp\acp_mopedgarage_module') . "'";
         $this->sql_query($sql);
     }
 
@@ -54,12 +54,12 @@ class v_1_2_0_permissions extends \phpbb\db\migration\migration
     {
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_u_'
-            WHERE module_basename = '" . $this->db->sql_escape('\\bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module') . "'";
+            WHERE module_basename = '" . $this->db->sql_escape('\bruno\mopedgarage\ucp\ucp_mopedgarage_module') . "'";
         $this->sql_query($sql);
 
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_a_board'
-            WHERE module_basename = '" . $this->db->sql_escape('\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module') . "'";
+            WHERE module_basename = '" . $this->db->sql_escape('\bruno\mopedgarage\acp\acp_mopedgarage_module') . "'";
         $this->sql_query($sql);
     }
 }
