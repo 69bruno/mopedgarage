@@ -6,7 +6,7 @@ class v_1_2_1_default_permissions extends \phpbb\db\migration\migration
     public static function depends_on()
     {
         return [
-            '\\bruno\\mopedgarage\\migrations\\v_1_2_0_permissions',
+            '\bruno\mopedgarage\migrations\v_1_2_0_permissions',
         ];
     }
 
