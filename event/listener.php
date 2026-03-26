@@ -15,31 +15,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-    /** @var auth */
     protected $auth;
-
-    /** @var template */
     protected $template;
-
-    /** @var language */
     protected $language;
-
-    /** @var config */
     protected $config;
-
-    /** @var request_interface */
     protected $request;
-
-    /** @var helper */
     protected $helper;
-
-    /** @var bike_manager */
     protected $bike_manager;
-
-    /** @var field_manager */
     protected $field_manager;
-
-    /** @var image_manager */
     protected $image_manager;
 
     public function __construct(
