@@ -31,7 +31,7 @@ class v_1_2_2_permissions_ui extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
-                'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\acp\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_SETTINGS',
                 'module_mode' => 'settings',
                 'module_auth' => 'acl_a_mopedgarage_manage',
@@ -39,7 +39,7 @@ class v_1_2_2_permissions_ui extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
-                'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\acp\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_FIELDS',
                 'module_mode' => 'fields',
                 'module_auth' => 'acl_a_mopedgarage_manage',
@@ -47,7 +47,7 @@ class v_1_2_2_permissions_ui extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['ucp', 'UCP_PROFILE', [
-                'module_basename' => '\\bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\ucp\ucp_mopedgarage_module',
                 'module_langname' => 'UCP_MOPEDGARAGE_EDIT',
                 'module_mode' => 'edit',
                 'module_auth' => 'acl_u_mopedgarage_use',
@@ -77,13 +77,13 @@ class v_1_2_2_permissions_ui extends \phpbb\db\migration\migration
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_a_mopedgarage_manage', module_enabled = 1, module_display = 1
             WHERE module_class = 'acp'
-                AND module_basename = 'bruno\\mopedgarage\\acp\\acp_mopedgarage_module'";
+                AND module_basename = 'bruno\mopedgarage\acp\acp_mopedgarage_module'";
         $this->sql_query($sql);
 
         $sql = 'UPDATE ' . MODULES_TABLE . "
             SET module_auth = 'acl_u_mopedgarage_use', module_enabled = 1, module_display = 1
             WHERE module_class = 'ucp'
-                AND module_basename = 'bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module'";
+                AND module_basename = 'bruno\mopedgarage\ucp\ucp_mopedgarage_module'";
         $this->sql_query($sql);
     }
 }
