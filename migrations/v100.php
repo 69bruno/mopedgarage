@@ -14,7 +14,7 @@ class v100 extends \phpbb\db\migration\migration
 
     public static function depends_on()
     {
-        return ['\\phpbb\\db\\migration\\data\\v330\\v330'];
+        return ['\phpbb\db\migration\data\v330\v330'];
     }
 
     public function update_schema()
@@ -121,7 +121,7 @@ class v100 extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
-                'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\acp\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_SETTINGS',
                 'module_mode' => 'settings',
                 'module_auth' => 'acl_a_mopedgarage_manage',
@@ -129,7 +129,7 @@ class v100 extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['acp', 'ACP_MOPEDGARAGE', [
-                'module_basename' => '\\bruno\\mopedgarage\\acp\\acp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\acp\acp_mopedgarage_module',
                 'module_langname' => 'ACP_MOPEDGARAGE_FIELDS',
                 'module_mode' => 'fields',
                 'module_auth' => 'acl_a_mopedgarage_manage',
@@ -137,7 +137,7 @@ class v100 extends \phpbb\db\migration\migration
                 'module_display' => 1,
             ]]],
             ['module.add', ['ucp', 'UCP_PROFILE', [
-                'module_basename' => '\\bruno\\mopedgarage\\ucp\\ucp_mopedgarage_module',
+                'module_basename' => '\bruno\mopedgarage\ucp\ucp_mopedgarage_module',
                 'module_langname' => 'UCP_MOPEDGARAGE_EDIT',
                 'module_mode' => 'edit',
                 'module_auth' => 'acl_u_mopedgarage_use',
