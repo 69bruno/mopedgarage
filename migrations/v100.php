@@ -8,12 +8,6 @@ class v100 extends \phpbb\db\migration\migration
 		return ['\phpbb\db\migration\data\v330\v330'];
 	}
 
-	public function effectively_installed()
-	{
-		return isset($this->config['mopedgarage_version'])
-			&& version_compare($this->config['mopedgarage_version'], '1.0.0', '>=');
-	}
-
 	public function update_schema()
 	{
 		return [
