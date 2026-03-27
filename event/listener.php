@@ -1,16 +1,6 @@
 <?php
 namespace bruno\mopedgarage\event;
 
-use bruno\mopedgarage\service\bike_manager;
-use bruno\mopedgarage\service\field_manager;
-use bruno\mopedgarage\service\image_manager;
-use phpbb\auth\auth;
-use phpbb\config\config;
-use phpbb\controller\helper;
-use phpbb\event\data;
-use phpbb\language\language;
-use phpbb\request\request_interface;
-use phpbb\template\template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
@@ -26,15 +16,16 @@ class listener implements EventSubscriberInterface
     protected $image_manager;
 
     public function __construct(
-        auth $auth,
-        template $template,
-        language $language,
-        config $config,
-        request_interface $request,
-        helper $helper,
-        bike_manager $bike_manager,
-        field_manager $field_manager,
-        image_manager $image_manager
+		
+		\phpbb\auth\auth $auth,,
+		\phpbb\template\template $template,
+        \phpbb\language\language $language,
+        \phpbb\config\config $config,
+        \phpbb\request\request $request,
+        \phpbb\controller\helper $helper,
+        $bike_manager,
+        $field_manager,
+        $image_manager,
     ) {
         $this->auth = $auth;
         $this->template = $template;

@@ -18,7 +18,6 @@ class acp_mopedgarage_module
 
         if ($mode === 'fields')
         {
-            /** @var runo\mopedgarage\serviceield_manager $field_manager */
             $field_manager = $phpbb_container->get('bruno.mopedgarage.field_manager');
 
             $this->tpl_name = 'acp_mopedgarage_fields';
@@ -138,7 +137,6 @@ class acp_mopedgarage_module
             return;
         }
 
-        /** @var runo\mopedgarage\service\image_manager $image_manager */
         $image_manager = $phpbb_container->get('bruno.mopedgarage.image_manager');
 
         $this->tpl_name = 'acp_mopedgarage_body';
