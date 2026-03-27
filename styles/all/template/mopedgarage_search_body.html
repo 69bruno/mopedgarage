@@ -1,95 +1,124 @@
-{% INCLUDE 'overall_header.html' %}
-<h2>{{ lang('MOPEDGARAGE_GALLERY_TITLE') }}</h2>
+<!-- INCLUDE overall_header.html -->
+
+<h2>{L_MOPEDGARAGE_GALLERY_TITLE}</h2>
 
 <div class="panel bg1 mopedgarage-gallery-panel">
-    <div class="inner">
-        <p>{{ lang('MOPEDGARAGE_GALLERY_EXPLAIN') }}</p>
+	<div class="inner">
+		<p>{L_MOPEDGARAGE_GALLERY_EXPLAIN}</p>
 
-        {% if MOPEDGARAGE_SEARCH_ERROR %}
-        <p class="error">{{ MOPEDGARAGE_SEARCH_ERROR }}</p>
-        {% endif %}
+		<!-- IF MOPEDGARAGE_SEARCH_ERROR -->
+			<p class="error">{MOPEDGARAGE_SEARCH_ERROR}</p>
+		<!-- ENDIF -->
 
-        <form action="{{ U_MOPEDGARAGE_GALLERY }}" method="get" class="mopedgarage-search-form mopedgarage-gallery-form">
-            <div class="fields1">
-                <dl>
-                    <dt><label for="mopedgarage_search_brand">{{ lang('UCP_MOPEDGARAGE_BRAND') }}</label></dt>
-                    <dd><input type="text" id="mopedgarage_search_brand" name="brand" value="{{ MOPEDGARAGE_SEARCH_BRAND }}" class="inputbox" maxlength="100"></dd>
-                </dl>
-                <dl>
-                    <dt><label for="mopedgarage_search_model">{{ lang('UCP_MOPEDGARAGE_MODEL') }}</label></dt>
-                    <dd><input type="text" id="mopedgarage_search_model" name="model" value="{{ MOPEDGARAGE_SEARCH_MODEL }}" class="inputbox" maxlength="100"></dd>
-                </dl>
-                <dl>
-                    <dt><label for="mopedgarage_search_capacity">{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}</label></dt>
-                    <dd><input type="number" id="mopedgarage_search_capacity" name="capacity" value="{{ MOPEDGARAGE_SEARCH_CAPACITY }}" min="0" class="inputbox autowidth"></dd>
-                </dl>
-                <dl>
-                    <dt><label for="mopedgarage_search_year">{{ lang('UCP_MOPEDGARAGE_YEAR') }}</label></dt>
-                    <dd><input type="number" id="mopedgarage_search_year" name="year" value="{{ MOPEDGARAGE_SEARCH_YEAR }}" min="0" max="9999" class="inputbox autowidth"></dd>
-                </dl>
-                <dl>
-                    <dt>{{ lang('MOPEDGARAGE_SEARCH_WITH_IMAGE') }}</dt>
-                    <dd><label><input type="checkbox" name="with_image" value="1"{% if S_MOPEDGARAGE_SEARCH_WITH_IMAGE %} checked="checked"{% endif %}> {{ lang('MOPEDGARAGE_SEARCH_WITH_IMAGE_EXPLAIN') }}</label></dd>
-                </dl>
-            </div>
+		<form action="{U_MOPEDGARAGE_GALLERY}" method="get" class="mopedgarage-search-form">
+			<fieldset class="fields1">
+				<dl>
+					<dt><label for="mopedgarage_search_brand">{L_UCP_MOPEDGARAGE_BRAND}</label></dt>
+					<dd><input type="text" id="mopedgarage_search_brand" name="brand" value="{MOPEDGARAGE_SEARCH_BRAND}" class="inputbox" maxlength="100" /></dd>
+				</dl>
 
-            <fieldset class="submit-buttons">
-                <input type="submit" name="search" value="{{ lang('SEARCH') }}" class="button1">
-                <a href="{{ U_MOPEDGARAGE_GALLERY }}" class="button2">{{ lang('RESET') }}</a>
-            </fieldset>
-        </form>
+				<dl>
+					<dt><label for="mopedgarage_search_model">{L_UCP_MOPEDGARAGE_MODEL}</label></dt>
+					<dd><input type="text" id="mopedgarage_search_model" name="model" value="{MOPEDGARAGE_SEARCH_MODEL}" class="inputbox" maxlength="100" /></dd>
+				</dl>
 
-        <hr>
+				<dl>
+					<dt><label for="mopedgarage_search_capacity">{L_UCP_MOPEDGARAGE_CAPACITY}</label></dt>
+					<dd><input type="number" id="mopedgarage_search_capacity" name="capacity" value="{MOPEDGARAGE_SEARCH_CAPACITY}" min="0" class="inputbox autowidth" /></dd>
+				</dl>
 
-        <div class="mopedgarage-gallery-toolbar">
-            {% if S_MOPEDGARAGE_GALLERY_OVERVIEW %}
-            <h3>{{ lang('MOPEDGARAGE_GALLERY_ALL_HEADING') }}</h3>
-            <p class="mopedgarage-gallery-toolbar__meta">{{ lang('MOPEDGARAGE_GALLERY_ALL_COUNT') }}: <strong>{{ MOPEDGARAGE_SEARCH_COUNT }}</strong></p>
-            {% else %}
-            <h3>{{ lang('MOPEDGARAGE_SEARCH_RESULTS_HEADING') }}</h3>
-            <p class="mopedgarage-gallery-toolbar__meta">{{ lang('MOPEDGARAGE_SEARCH_RESULTS_COUNT') }}: <strong>{{ MOPEDGARAGE_SEARCH_COUNT }}</strong></p>
-            {% endif %}
-        </div>
+				<dl>
+					<dt><label for="mopedgarage_search_year">{L_UCP_MOPEDGARAGE_YEAR}</label></dt>
+					<dd><input type="number" id="mopedgarage_search_year" name="year" value="{MOPEDGARAGE_SEARCH_YEAR}" min="0" max="9999" class="inputbox autowidth" /></dd>
+				</dl>
 
-        {% if S_MOPEDGARAGE_SEARCH_RESULTS %}
-        <div class="mopedgarage-gallery-grid">
-            {% for search_results in loops.search_results %}
-            <article class="mopedgarage-gallery-card">
-                {% if search_results.S_HAS_IMAGE %}
-                <div class="mopedgarage-gallery-card__image">
-                    <a href="{{ search_results.IMAGE_URL }}" class="js-mopedgarage-lightbox-trigger" data-lightbox-image="{{ search_results.IMAGE_URL }}" data-lightbox-title="{{ search_results.TITLE|e('html_attr') }}" aria-label="{{ search_results.TITLE }}">
-                        {% if search_results.THUMB_URL %}
-                        <img src="{{ search_results.THUMB_URL }}" alt="{{ search_results.TITLE }}" loading="lazy" decoding="async">
-                        {% else %}
-                        <img src="{{ search_results.IMAGE_URL }}" alt="{{ search_results.TITLE }}" loading="lazy" decoding="async">
-                        {% endif %}
-                    </a>
-                </div>
-                {% endif %}
-                <div class="mopedgarage-gallery-card__body">
-                    <h4 class="mopedgarage-gallery-card__title">{{ search_results.TITLE }}</h4>
-                    <p class="mopedgarage-gallery-card__owner">{{ lang('MOPEDGARAGE_GALLERY_OWNER') }}: {{ search_results.USERNAME_FULL }}</p>
-                    <div class="mopedgarage-gallery-card__facts">
-                        {% if search_results.BRAND %}<p><strong>{{ lang('UCP_MOPEDGARAGE_BRAND') }}:</strong> {{ search_results.BRAND }}</p>{% endif %}
-                        {% if search_results.MODEL %}<p><strong>{{ lang('UCP_MOPEDGARAGE_MODEL') }}:</strong> {{ search_results.MODEL }}</p>{% endif %}
-                        {% if search_results.S_SHOW_YEAR %}<p><strong>{{ lang('UCP_MOPEDGARAGE_YEAR') }}:</strong> {{ search_results.YEAR }}</p>{% endif %}
-                        {% if search_results.S_SHOW_CAPACITY %}<p><strong>{{ lang('UCP_MOPEDGARAGE_CAPACITY') }}:</strong> {{ search_results.CAPACITY }}</p>{% endif %}
-                        {% if search_results.S_SHOW_COLOR %}<p><strong>{{ lang('UCP_MOPEDGARAGE_COLOR') }}:</strong> {{ search_results.COLOR }}</p>{% endif %}
-                        {% for custom_fields in search_results.custom_fields %}
-                        <p><strong>{{ custom_fields.FIELD_LABEL }}:</strong> {{ custom_fields.FIELD_VALUE }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="mopedgarage-search-actions">
-                        <a href="{{ search_results.PROFILE_URL }}" class="button2">{{ lang('MOPEDGARAGE_SEARCH_VIEW_PROFILE') }}</a>
-                    </div>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% else %}
-        <p>{{ lang('MOPEDGARAGE_SEARCH_NO_RESULTS') }}</p>
-        {% endif %}
-    </div>
+				<dl>
+					<dt><label for="mopedgarage_search_with_image">{L_MOPEDGARAGE_SEARCH_WITH_IMAGE}</label></dt>
+					<dd>
+						<label for="mopedgarage_search_with_image">
+							<input type="checkbox" id="mopedgarage_search_with_image" name="with_image" value="1"<!-- IF S_MOPEDGARAGE_SEARCH_WITH_IMAGE --> checked="checked"<!-- ENDIF --> />
+							{L_MOPEDGARAGE_SEARCH_WITH_IMAGE_EXPLAIN}
+						</label>
+					</dd>
+				</dl>
+			</fieldset>
+
+			<fieldset class="submit-buttons">
+				<input type="submit" name="search" value="{L_SEARCH}" class="button1" />
+				<input type="reset" value="{L_RESET}" class="button1" onclick="window.location='{U_MOPEDGARAGE_GALLERY}';" />
+			</fieldset>
+		</form>
+
+		<hr />
+
+		<div class="mopedgarage-gallery-toolbar">
+			<!-- IF S_MOPEDGARAGE_GALLERY_OVERVIEW -->
+				<h3>{L_MOPEDGARAGE_GALLERY_ALL_HEADING}</h3>
+				<p class="mopedgarage-gallery-toolbar__meta">{L_MOPEDGARAGE_GALLERY_ALL_COUNT}: <strong>{MOPEDGARAGE_SEARCH_COUNT}</strong></p>
+			<!-- ELSE -->
+				<h3>{L_MOPEDGARAGE_SEARCH_RESULTS_HEADING}</h3>
+				<p class="mopedgarage-gallery-toolbar__meta">{L_MOPEDGARAGE_SEARCH_RESULTS_COUNT}: <strong>{MOPEDGARAGE_SEARCH_COUNT}</strong></p>
+			<!-- ENDIF -->
+		</div>
+
+		<!-- IF S_MOPEDGARAGE_SEARCH_RESULTS -->
+			<div class="mopedgarage-ucp-grid">
+				<!-- BEGIN search_results -->
+					<div class="mopedgarage-bike-card">
+						<!-- IF search_results.S_HAS_IMAGE -->
+							<div class="mopedgarage-bike-card__image-wrap">
+								<a href="{search_results.IMAGE_URL}"
+									class="js-mopedgarage-lightbox-trigger"
+									data-lightbox-image="{search_results.IMAGE_URL}"
+									data-lightbox-title="{search_results.TITLE}"
+									data-lightbox-group="search-results"
+									aria-label="{search_results.TITLE}">
+									<!-- IF search_results.THUMB_URL -->
+										<img src="{search_results.THUMB_URL}" alt="{search_results.TITLE}" class="mopedgarage-bike-card__image" loading="lazy" />
+									<!-- ELSE -->
+										<img src="{search_results.IMAGE_URL}" alt="{search_results.TITLE}" class="mopedgarage-bike-card__image" loading="lazy" />
+									<!-- ENDIF -->
+								</a>
+							</div>
+						<!-- ENDIF -->
+
+						<div class="mopedgarage-bike-card__body">
+							<h4 class="mopedgarage-bike-card__title">{search_results.TITLE}</h4>
+							<p class="mopedgarage-bike-card__owner">{L_MOPEDGARAGE_GALLERY_OWNER}: {search_results.USERNAME_FULL}</p>
+
+							<div class="mopedgarage-bike-card__meta">
+								<!-- IF search_results.BRAND -->
+									<div><strong>{L_UCP_MOPEDGARAGE_BRAND}:</strong> {search_results.BRAND}</div>
+								<!-- ENDIF -->
+								<!-- IF search_results.MODEL -->
+									<div><strong>{L_UCP_MOPEDGARAGE_MODEL}:</strong> {search_results.MODEL}</div>
+								<!-- ENDIF -->
+								<!-- IF search_results.S_SHOW_YEAR -->
+									<div><strong>{L_UCP_MOPEDGARAGE_YEAR}:</strong> {search_results.YEAR}</div>
+								<!-- ENDIF -->
+								<!-- IF search_results.S_SHOW_CAPACITY -->
+									<div><strong>{L_UCP_MOPEDGARAGE_CAPACITY}:</strong> {search_results.CAPACITY}</div>
+								<!-- ENDIF -->
+								<!-- IF search_results.S_SHOW_COLOR -->
+									<div><strong>{L_UCP_MOPEDGARAGE_COLOR}:</strong> {search_results.COLOR}</div>
+								<!-- ENDIF -->
+
+								<!-- BEGIN custom_fields -->
+									<div><strong>{search_results.custom_fields.FIELD_LABEL}:</strong> {search_results.custom_fields.FIELD_VALUE}</div>
+								<!-- END custom_fields -->
+							</div>
+
+							<div class="mopedgarage-bike-card__actions">
+								<a href="{search_results.PROFILE_URL}" class="button1">{L_MOPEDGARAGE_SEARCH_VIEW_PROFILE}</a>
+							</div>
+						</div>
+					</div>
+				<!-- END search_results -->
+			</div>
+		<!-- ELSE -->
+			<p>{L_MOPEDGARAGE_SEARCH_NO_RESULTS}</p>
+		<!-- ENDIF -->
+	</div>
 </div>
 
-{% INCLUDE 'overall_footer.html' %}
+<!-- INCLUDE overall_footer.html -->

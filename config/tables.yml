@@ -1,0 +1,4 @@
+parameters:
+    bruno.mopedgarage.mopedgarage_bikes: '%core.table_prefix%mopedgarage_bikes'
+    bruno.mopedgarage.mopedgarage_fields: '%core.table_prefix%mopedgarage_fields'
+    bruno.mopedgarage.mopedgarage_field_values: '%core.table_prefix%mopedgarage_field_values' 

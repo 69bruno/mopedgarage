@@ -1,10 +1,10 @@
 <?php
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 $lang = array_merge($lang, [
-    'ACP_MOPEDGARAGE' => 'Mopedgarage',
-    'ACP_MOPEDGARAGE_SETTINGS' => 'Mopedgarage-Einstellungen',
+	'ACP_MOPEDGARAGE' => 'Mopedgarage',
+	'ACP_MOPEDGARAGE_SETTINGS' => 'Mopedgarage-Einstellungen',
 ]);
